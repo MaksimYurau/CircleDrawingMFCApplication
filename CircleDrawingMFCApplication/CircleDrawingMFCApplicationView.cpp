@@ -32,6 +32,7 @@ BEGIN_MESSAGE_MAP(CCircleDrawingMFCApplicationView, CView)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONUP()
+	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
 void CCircleDrawingMFCApplicationView::OnLButtonDown(UINT nFlags, CPoint point)
@@ -118,6 +119,33 @@ void CCircleDrawingMFCApplicationView::OnDraw(CDC* pDC)
 		// Восстановление предыдущей кисти
 		pDC->SelectObject(pOldBrush);
 	}
+}
+
+void CCircleDrawingMFCApplicationView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	CCircleDrawingMFCApplicationDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	if (nChar == VK_BACK)
+	{
+		// Удаляем последнюю нарисованную окружность
+		pDoc->RemoveLastCircle();
+
+		// Перерисовываем вид
+		Invalidate();
+	}
+	else if (nChar == VK_DELETE)
+	{
+		// Удаляем все окружности
+		pDoc->RemoveAllCircles();
+
+		// Перерисовываем вид
+		Invalidate();
+	}
+
+	CView::OnKeyDown(nChar, nRepCnt, nFlags);
 }
 
 // Создание или уничтожение CCircleDrawingMFCApplicationView
