@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <afxwin.h> 
+#include <random> 
 
 class CCircleDrawingMFCApplicationDoc : public CDocument
 {

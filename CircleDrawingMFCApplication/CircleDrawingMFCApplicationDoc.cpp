@@ -143,7 +143,13 @@ void CCircleDrawingMFCApplicationDoc::AddCircle(int x, int y)
 	circle.x = x;
 	circle.y = y;
 	circle.radius = 50; // Измените этот параметр по вашему желанию
-	circle.color = RGB(255, 0, 0); // Задайте цвет окружности (в данном случае - красный)
+
+	// Генерация случайного цвета окружности
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<> dis(0, 255);
+	circle.color = RGB(dis(gen), dis(gen), dis(gen)); // Задайте случайный цвет окружности
+
 	m_circles.push_back(circle);
 }
 
