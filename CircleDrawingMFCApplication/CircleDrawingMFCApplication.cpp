@@ -217,33 +217,3 @@ void CCircleDrawingMFCApplicationApp::SaveCustomState()
 }
 
 // Обработчики сообщений CCircleDrawingMFCApplicationApp
-
-/*
-void CCircleDrawingMFCApplicationView::OnDraw(CDC* pDC)
-{
-	CCircleDrawingMFCApplicationDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
-	if (!pDoc)
-		return;
-
-	// TODO: добавьте код отрисовки для своего документа
-	
-	// Пример кода для рисования окружности
-	for (const auto& circle : pDoc->GetCircles()) {
-		int centerX = circle.x; // координата X центра окружности
-		int centerY = circle.y; // координата Y центра окружности
-		int radius = circle.radius;   // радиус окружности
-
-		pDC->Ellipse(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
-	}
-}
-
-void CCircleDrawingMFCApplicationView::OnLButtonDown(UINT nFlags, CPoint point)
-{
-	// Добавьте код обработчика сообщений или вызов стандартного обработчика
-	CCircleDrawingMFCApplicationDoc* pDoc = GetDocument();
-	pDoc->AddCircle(point.x, point.y); // Добавление окружности в документ
-	Invalidate(); // Перерисовка представления
-	CView::OnLButtonDown(nFlags, point);
-}
-*/

@@ -137,12 +137,12 @@ void CCircleDrawingMFCApplicationDoc::Dump(CDumpContext& dc) const
 
 // Команды CCircleDrawingMFCApplicationDoc
 
-void CCircleDrawingMFCApplicationDoc::AddCircle(int x, int y)
+void CCircleDrawingMFCApplicationDoc::AddCircle(int x, int y, int radius)
 {
 	Circle circle;
 	circle.x = x;
 	circle.y = y;
-	circle.radius = 50; // Измените этот параметр по вашему желанию
+	circle.radius = radius;
 
 	// Генерация случайного цвета окружности
 	std::random_device rd;

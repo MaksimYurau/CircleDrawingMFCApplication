@@ -25,16 +25,38 @@ public:
 		COLORREF color; // Поле для хранения цвета окружности
 	};
 
-	void AddCircle(int x, int y);
+	void AddCircle(int x, int y, int radius);
 	void RemoveLastCircle();
 	void RemoveAllCircles();
 	const std::vector<Circle>& GetCircles() const;
 
 private:
+	CPoint m_startPoint; // Начальная точка рисования окружности
+	bool m_isDrawing;    // Флаг рисования окружности
 	std::vector<Circle> m_circles;
 // Операции
 public:
+	void SetDrawingData(const CPoint& startPoint, bool isDrawing)
+	{
+		m_startPoint = startPoint;
+		m_isDrawing = isDrawing;
+	}
 
+	void GetDrawingData(CPoint& startPoint, bool& isDrawing)
+	{
+		startPoint = m_startPoint;
+		isDrawing = m_isDrawing;
+}
+
+	void UpdateCircleRadius(int radius)
+	{
+		std::vector<Circle>& circles = m_circles;
+		if (!circles.empty())
+		{
+			Circle& lastCircle = circles.back();
+			lastCircle.radius = radius;
+		}
+	}
 // Переопределение
 public:
 	virtual BOOL OnNewDocument();
