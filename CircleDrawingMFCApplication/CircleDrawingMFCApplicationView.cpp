@@ -35,6 +35,15 @@ BEGIN_MESSAGE_MAP(CCircleDrawingMFCApplicationView, CView)
 	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
+BOOL CCircleDrawingMFCApplicationDoc::SaveDocument(const CString& filePath)
+{
+	CFile file(filePath, CFile::modeCreate | CFile::modeWrite);
+	CArchive ar(&file, CArchive::store);
+	Serialize(ar);
+	SetModifiedFlag(FALSE);
+	return TRUE;
+}
+
 void CCircleDrawingMFCApplicationView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// Добавьте код обработчика сообщений или вызов стандартного обработчика
@@ -136,6 +145,7 @@ void CCircleDrawingMFCApplicationView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT 
 		// Перерисовываем вид
 		Invalidate();
 	}
+
 	else if (nChar == VK_DELETE)
 	{
 		// Удаляем все окружности
@@ -143,6 +153,38 @@ void CCircleDrawingMFCApplicationView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT 
 
 		// Перерисовываем вид
 		Invalidate();
+	}
+
+	else if (nChar == 'S')
+	{
+		// Сохраняем данные
+		CFileDialog dlg(FALSE, _T(".dat"), nullptr, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, _T("Data Files (*.dat)|*.dat||"), this);
+		if (dlg.DoModal() == IDOK)
+		{
+			CString filePath = dlg.GetPathName();
+			pDoc->SaveDocument(filePath);
+		}
+	}
+	else if (nChar == 'L')
+	{
+		// Открываем файл
+		CFileDialog dlg(TRUE, _T(".dat"), nullptr, OFN_HIDEREADONLY | OFN_FILEMUSTEXIST, _T("Data Files (*.dat)|*.dat||"), this);
+		if (dlg.DoModal() == IDOK)
+		{
+			CString filePath = dlg.GetPathName();
+
+			// Закрываем текущий документ, если он открыт
+			if (pDoc->IsModified())
+				pDoc->OnCloseDocument();
+
+			// Создаем новый документ и открываем его
+			pDoc = dynamic_cast<CCircleDrawingMFCApplicationDoc*>(AfxGetApp()->OpenDocumentFile(filePath));
+			if (pDoc)
+			{
+				// Перерисовываем вид
+				Invalidate();
+			}
+		}
 	}
 
 	CView::OnKeyDown(nChar, nRepCnt, nFlags);

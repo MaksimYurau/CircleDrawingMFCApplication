@@ -17,6 +17,10 @@ protected: // создать только из сериализации
 
 // Атрибуты
 public:
+
+	BOOL SaveDocument(const CString& filePath);
+	BOOL OpenDocument(const CString& filePath);
+
 	struct Circle
 	{
 		int x;

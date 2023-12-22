@@ -49,9 +49,6 @@ BOOL CCircleDrawingMFCApplicationDoc::OnNewDocument()
 	return TRUE;
 }
 
-
-
-
 // Сериализация CCircleDrawingMFCApplicationDoc
 
 void CCircleDrawingMFCApplicationDoc::Serialize(CArchive& ar)
@@ -64,6 +61,15 @@ void CCircleDrawingMFCApplicationDoc::Serialize(CArchive& ar)
 	{
 		// TODO: добавьте код загрузки
 	}
+}
+
+BOOL CCircleDrawingMFCApplicationDoc::OpenDocument(const CString& filePath)
+{
+	CFile file(filePath, CFile::modeRead);
+	CArchive ar(&file, CArchive::load);
+	Serialize(ar);
+	SetModifiedFlag(FALSE);
+	return TRUE;
 }
 
 #ifdef SHARED_HANDLERS
